@@ -120,6 +120,17 @@ function mpt_handle_git
     fi
 }
 
+function mpt_handle_hamster
+{
+    which hamster &> /dev/null
+    if [ $? -ne 0 ] ; then
+        return
+    fi
+    mpt_sepa "{"
+    mpt_add  "$(hamster current)"
+    mpt_sepa "}" 
+}
+
 function MagicPrompt
 {
     old_ret=$?
@@ -131,6 +142,7 @@ function MagicPrompt
     mpt_handle_aws
     mpt_handle_netns
     mpt_handle_git
+    mpt_handle_hamster
     #Handle extenders :)
     for i in $(set | grep "^mpt_extra_" | sed 's/()//g') ; do
         $i
